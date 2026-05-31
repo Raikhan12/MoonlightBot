@@ -1,0 +1,1 @@
+# Moonlight Bot Template\nInstall dependencies with npm install and configure .env
