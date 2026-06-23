@@ -7,8 +7,8 @@ const {
 module.exports = {
 
     data: new SlashCommandBuilder()
-        .setName('ban')
-        .setDescription('Ban member')
+        .setName('kick')
+        .setDescription('Kick member')
         .addUserOption(option =>
             option
                 .setName('user')
@@ -21,22 +21,20 @@ module.exports = {
                 .setDescription('Alasan')
         )
         .setDefaultMemberPermissions(
-            PermissionFlagsBits.BanMembers
+            PermissionFlagsBits.KickMembers
         ),
 
     async execute(interaction) {
 
-        const user =
-            interaction.options.getUser('user');
+        const member =
+            interaction.options.getMember(
+                'user'
+            );
 
         const reason =
-            interaction.options.getString('reason')
-            || 'Tidak ada alasan';
-
-        const member =
-            await interaction.guild.members.fetch(
-                user.id
-            ).catch(() => null);
+            interaction.options.getString(
+                'reason'
+            ) || 'Tidak ada alasan';
 
         if (!member) {
             return interaction.reply({
@@ -45,7 +43,7 @@ module.exports = {
             });
         }
 
-        await member.ban({ reason });
+        await member.kick(reason);
 
         const embed =
             new EmbedBuilder()
@@ -54,8 +52,8 @@ module.exports = {
                     name: '🌙 Moonlight Hub • Moderation',
                     iconURL: interaction.guild.iconURL({ dynamic: true }) || interaction.client.user.displayAvatarURL()
                 })
-                .setTitle('🔨 Member Berhasil Dibanned')
-                .setDescription(`**User:** ${user} (${user.tag})\n**User ID:** \`${user.id}\``)
+                .setTitle('👢 Member Berhasil Dikick')
+                .setDescription(`**User:** ${member.user} (${member.user.tag})\n**User ID:** \`${member.id}\``)
                 .addFields({
                     name: '📄 Alasan',
                     value: reason

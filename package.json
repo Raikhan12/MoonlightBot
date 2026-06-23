@@ -1,11 +1,15 @@
 {
-  "name": "moonlight-bot",
+  "name": "moonlight-hub-bot",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {"start":"node index.js"},
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js"
+  },
   "dependencies": {
     "discord.js": "^14.21.0",
-    "dotenv": "^16.0.0",
-    "mongoose": "^8.0.0"
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.15.0",
+    "discord-html-transcripts": "^3.3.0"
   }
 }
